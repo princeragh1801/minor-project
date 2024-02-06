@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../Button";
+import Button from "../../Button";
 import BoxWithHeadingAndCotainer from "./BoxWithHeadingAndCotainer";
-import FooterSection from "../Footer/Footer";
+
 
 function Landing() {
   return (
@@ -74,7 +74,7 @@ function Landing() {
           </div>
           </div>
       </div>
-      <FooterSection/>
+
     </>
   );
 }
