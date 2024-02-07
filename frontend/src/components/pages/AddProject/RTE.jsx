@@ -1,6 +1,6 @@
 import React, {useRef} from 'react'
 import {Editor} from '@tinymce/tinymce-react'
-function AddDescriptionEditor() {
+function RTE() {
     const editorRef = useRef(null);
     const log = () => {
       if (editorRef.current) {
@@ -9,12 +9,12 @@ function AddDescriptionEditor() {
     };
     return (
       <>
-      <div className='w-[50vw]'>
+      <div className='w-auto'>
         
         <Editor
         apiKey="rg6sr11t19prcuqb20pduc10mzc3gc4a7wlg7szcxnbahp10"
           onInit={(evt, editor) => editorRef.current = editor}
-          initialValue="<p>Add description of your project.</p>"
+          initialValue="<p>Add overview of your project.</p>"
           init={{
             height: 300,
             menubar: true,
@@ -51,4 +51,4 @@ function AddDescriptionEditor() {
       </>
     );
   }
-export default AddDescriptionEditor
+export default RTE

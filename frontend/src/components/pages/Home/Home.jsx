@@ -40,10 +40,9 @@ function Home() {
 
         {/* Right Container */}
         <div className='p-4 border-2 border-gray border-t-0 '>
-        <h2 className="text-xl font-bold mb-2">Featured Projects</h2>
+        <h2 className="text-xl font-bold ml-4 mb-2">Featured Projects</h2>
         <div className="flex flex-wrap">
         
-          <ProjectPreviewCard/>
           <ProjectPreviewCard/>
           <ProjectPreviewCard/>
           <ProjectPreviewCard/>

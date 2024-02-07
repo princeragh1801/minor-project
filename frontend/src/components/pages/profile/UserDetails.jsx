@@ -41,10 +41,10 @@ const UserDetails = () => {
   return (
     <div className="container bg-white-200 rounded shadow br-gray  ">
       <div className="user flex p-4 justify-center shadow-sm w-full ">
-        <div className="img ">
-          <img src="src/assets/Images/Collab-rafiki.png" alt="" className="rounded-full w-[50px] bg-black" />
-        </div>
-        <div className="details px-3">
+        
+          <img src="https://th.bing.com/th/id/OIP.52T8HHBWh6b0dwrG6tSpVQHaFe?rs=1&pid=ImgDetMain" alt="" className="rounded-full  bg-black" height={100} width={100}/>
+        
+        <div className="details px-3 text-center mt-4">
           <h1 className="font-bold">User-93</h1>
           <p>093672882</p>
         </div>
