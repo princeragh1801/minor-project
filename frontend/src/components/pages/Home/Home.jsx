@@ -1,7 +1,7 @@
 import React from 'react'
 import ProjectPreviewCard from '../../ProjectPreviewCard'
 import Input from '../../Input'
-import Checkbox from '../Contact/Checkbox'
+import CheckBox from './CheckBox'
 function Home() {
   return (
     <div className="my-4 flex flex-col justify-center items-center">
@@ -20,19 +20,19 @@ function Home() {
           <h2 className="text-xl font-bold mb-2 ml-3">Filters</h2>
           <div className=" w-[200px] ml-2 min-h-10">
             <div className="pt-6">
-              <Checkbox heading="Technology" item1={"Web devlopment"} item2={"App Devlopment"} item3={"Flutter"} />
+              <CheckBox heading="Technology" item1={"Web devlopment"} item2={"App Devlopment"} item3={"Flutter"} />
             </div>
             <div className="pt-6">
-              <Checkbox heading="Technology Stack " item1={"HTML"} item2={"JAVA"} item3={"REACT"} />
+              <CheckBox heading="Technology Stack " item1={"HTML"} item2={"JAVA"} item3={"REACT"} />
             </div>
             <div className="pt-6">
-              <Checkbox heading="Project Type" item1={"Software"} item2={"Hardware"} item3={"Simple"} />
+              <CheckBox heading="Project Type" item1={"Software"} item2={"Hardware"} item3={"Simple"} />
             </div>
             <div className="pt-6">
-              <Checkbox heading="Project Type" item1={"Software"} item2={"Hardware"} item3={"Simple"} />
+              <CheckBox heading="Project Type" item1={"Software"} item2={"Hardware"} item3={"Simple"} />
             </div>
             <div className="pt-6">
-              <Checkbox heading="Project Type" item1={"Software"} item2={"Hardware"} item3={"Simple"} />
+              <CheckBox heading="Project Type" item1={"Software"} item2={"Hardware"} item3={"Simple"} />
             </div>
           </div>
           

@@ -1,9 +1,7 @@
 import React from 'react'
 import ProjectPreviewCard from '../../ProjectPreviewCard'
-import Checkbox from './Checkbox'
+import Checkbox from '../Home/CheckBox'
 function Contact() {
-
-
 
   return (
     <section className="w-full">
