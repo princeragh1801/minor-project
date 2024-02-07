@@ -34,6 +34,14 @@ function Header() {
                 Contact
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/add-project"
+                className="font-semibold text-gray-800 hover:text-gray-900 text-lg"
+              >
+                Add a Project
+              </NavLink>
+            </li>
           </ul>
         </div>
         <div className="hidden lg:block mx-4">
