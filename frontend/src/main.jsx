@@ -8,7 +8,7 @@ import SignUp from './components/pages/SignUp/SignUp.jsx'
 import Landing from './components/pages/Landing/Landing.jsx'
 import Layout from './Layout.jsx'
 import Home from './components/pages/Home/Home.jsx'
-import Profile from './components/pages/profile/Profile.jsx'
+import Profile from './components/pages/Profile/Profile.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout/>}>
