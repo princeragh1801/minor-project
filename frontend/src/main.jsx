@@ -9,6 +9,7 @@ import Landing from './components/pages/Landing/Landing.jsx'
 import Layout from './Layout.jsx'
 import Home from './components/pages/Home/Home.jsx'
 import Profile from './components/pages/Profile/Profile.jsx'
+import Contact from './components/pages/Contact/Contact.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout/>}>
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path= 'signup' element={<SignUp/>} />
       <Route path= 'home' element={<Home/>} />
       <Route path= 'profile' element={<Profile/>} />
+      <Route path= 'contact' element={<Contact/>} />
 
 
     </Route>
