@@ -20,10 +20,10 @@ function Header() {
             </li>
             <li>
               <NavLink
-                to="/about"
+                to="/profile"
                 className="text-lg font-semibold text-gray-800 hover:text-gray-900"
               >
-                About
+                Profile
               </NavLink>
             </li>
             <li>
