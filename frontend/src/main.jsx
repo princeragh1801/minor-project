@@ -10,11 +10,11 @@ import Home from './components/pages/Home/Home.jsx'
 import Profile from './components/pages/Profile/Profile.jsx'
 import Contact from './components/pages/Contact/Contact.jsx'
 import AddProject from './components/pages/AddProject/AddProject.jsx'
-import ProjectDetail from './components/pages/ViewProject/ProjectDetail.jsx'
-// import Comment from './components/pages/ViewProject/CommentPro.jsx'
-import CommentPro from './components/pages/ViewProject/Comment/Commentpro.jsx'
 
-import Aboutproject from './components/pages/ViewProject/AboutProject/AboutPro.jsx'
+import ProjectDetail from './components/pages/ProjectDetail/ProjectDetail.jsx'
+import Comment from './components/pages/ProjectDetail/Comment/Comment.jsx'
+
+import About from './components/pages/ProjectDetail/About/About.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,8 +27,8 @@ const router = createBrowserRouter(
       <Route path= 'contact' element={<Contact/>} />
       <Route path= 'add-project' element={<AddProject/>} />
       <Route path= 'project-detail' element={<ProjectDetail/>} />
-      <Route path= 'about-project' element={<Aboutproject/>} />
-      <Route path= 'comment' element={<CommentPro/>} />
+      {/* <Route path= 'about' element={<About/>} />
+      <Route path= 'comment' element={<Comment/>} /> */}
     
 
 

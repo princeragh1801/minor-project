@@ -1,12 +1,12 @@
 import ProjectDetail from "../ProjectDetail";
 import React from "react";
 
-function CommentPro() {
+function Comment() {
     
     return (
 
         <div className="container">
-            <ProjectDetail></ProjectDetail>
+            
             <div className="flex justify-center">
                 <div className="float-start w-[50%] border-2 border-gray-300">
                 
@@ -229,4 +229,4 @@ function CommentPro() {
         </div>
     );
 }
-export default CommentPro;
+export default Comment;
