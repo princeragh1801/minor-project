@@ -20,7 +20,9 @@ const Projects = () => {
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br />Dolore praesentium in maxime ab error deserunt id enim eaque voluptates facilis.</p>
         <div className="button m-5 flex justify-between">
           <Button title="Edit" className="bg-white border-solid border-2 border-green-600"/>
+          
           <Button title="view project" className="bg-white border-solid border-2 border-green-600"/>
+         
         </div>
        
       </div>

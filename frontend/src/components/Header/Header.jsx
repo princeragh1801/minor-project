@@ -13,7 +13,7 @@ function Header() {
             <li>
               <NavLink
                 to="/home"
-                className="text-lg font-semibold text-gray-800 hover:text-gray-900"
+                className="text-lg font-semibold text-gray-800 hover:text-gray-900 hover:border-b-2 border-green-600"
               >
                 Home
               </NavLink>
@@ -21,7 +21,7 @@ function Header() {
             <li>
               <NavLink
                 to="/profile"
-                className="text-lg font-semibold text-gray-800 hover:text-gray-900"
+                className="text-lg font-semibold text-gray-800 hover:text-gray-900 hover:border-b-2 border-green-600"
               >
                 Profile
               </NavLink>
@@ -29,7 +29,7 @@ function Header() {
             <li>
               <NavLink
                 to="/contact"
-                className="font-semibold text-gray-800 hover:text-gray-900 text-lg"
+                className="font-semibold text-gray-800 hover:text-gray-900 text-lg hover:border-b-2 border-green-600"
               >
                 Contact
               </NavLink>
@@ -37,7 +37,7 @@ function Header() {
             <li>
               <NavLink
                 to="/add-project"
-                className="font-semibold text-gray-800 hover:text-gray-900 text-lg"
+                className="font-semibold text-gray-800 hover:text-gray-900 text-lg hover:border-b-2 border-green-600"
               >
                 Add a Project
               </NavLink>

@@ -2,8 +2,10 @@ import React from 'react'
 import IconWithName from './IconWithName'
 import { BiLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 function ProjectPreviewCard() {
   return (
+    
     <div className="w-[350px] rounded-md border m-4">
   <img
     src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60"
@@ -24,12 +26,14 @@ function ProjectPreviewCard() {
     <h6 className='text-sm text-gray-500 font-semibold'>By princeragh1801</h6>
     <p className='text-sm text-gray-500 font-semibold'>20.03.2024</p>
     <hr />
+    <Link to="/project-detail">
     <button
       type="button"
       className="w-full mt-4 bg-black px-2.5 py-1 text-lg font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black rounded-md"
     >
       Read More
     </button>
+    </Link>
   </div>
 </div>
 
