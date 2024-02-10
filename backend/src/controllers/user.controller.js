@@ -3,6 +3,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/user.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
+import jwt from "jsonwebtoken"
 
 const cookieOptions = {
     httpOnly : true,
@@ -170,4 +171,155 @@ const logoutUser = asyncHandler(async(req, res) => {
     )
 
 })
-export {registerUser,loginUser, logoutUser}
+
+const refreshAccessToken = asyncHandler(async(req, res) => {
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+
+    if(!incomingRefreshToken){
+        throw new ApiError(401, "Unauthorized request");
+    }
+
+    try {
+        const decodedToken = jwt.verify(
+            incomingRefreshToken, 
+            process.env.REFRESH_TOKEN_SECRET
+        )
+    
+        const user = await User.findById(decodedToken?._id)
+    
+        if(!user){
+            throw new ApiError(401, "Invalid refresh token")
+        }
+    
+        if(incomingRefreshToken !== user.refreshToken){
+            throw new ApiError(401, "Refresh token is expired or used")
+        }
+    
+        const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
+    
+        return res
+        .status(200)
+        .cookie("acessToken", accessToken, cookieOptions)
+        .cookie("refreshToken", refreshToken, cookieOptions)
+        .json(
+            new ApiResponse(
+                200,
+                {accessToken, refreshToken},
+                "Access token refreshed"
+            )
+        )
+    } catch (error) {
+        throw new ApiError(401, error?.message || "Invalid access token")
+    }
+})
+
+const changeCurrentPassword = asyncHandler(async(req, res)=>{
+    const {oldPassword, newPassword} = req.body;
+
+    const user =await User.findById(req.user?._id)
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+    if(!isPasswordCorrect){
+        throw new ApiError(404, "Invalid old password")
+    }
+
+    user.password = newPassword
+    await user.save({validateBeforeSave:false})
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            {},
+            "Password changed successfully"
+        )
+    )
+})
+
+const getCurrentUser = asyncHandler(async(req, res) =>{
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            req.user,
+            "Current user fetched successfully"
+        )
+    )
+})
+
+const updateAccountDetails = asyncHandler(async(req, res) => {
+    const {fullname} = req.body;
+    if(!fullname){
+        throw new ApiError(400, "Enter full name")
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set : {
+                fullname : fullname
+            }
+        },
+        {
+            new : true
+        }
+    ).select("-password -refreshToken")
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user,
+            "Account details updated"
+        )
+    )
+})
+
+const updateUserAvatar = asyncHandler(async(req, res) => {
+    const avatarLocalPath = req.file?.path;
+
+    if(!avatarLocalPath){
+        throw new ApiError(400, "Avatar file is missing")
+    }
+
+    const avatar = await uploadOnCloudinary(avatarLocalPath)
+
+    if(!avatar.url){
+        throw new ApiError(500, "Error while uploading avatar")
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user?._id, 
+        {
+            $set :{
+                avatar : avatar.url
+            }
+        },
+        {
+            new : true
+        }
+    ).select("-password -refreshToken")
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user,
+            "Avatar updated successfully"
+        )
+    )
+})
+export {
+    registerUser,
+    loginUser, 
+    logoutUser, 
+    refreshAccessToken, 
+    getCurrentUser,
+    changeCurrentPassword,
+    updateAccountDetails,
+    updateUserAvatar
+}
