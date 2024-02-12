@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ProjectDetail from "../ProjectDetail";
+
 function About() {
   return (
     <div className="container ">

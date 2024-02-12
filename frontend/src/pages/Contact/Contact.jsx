@@ -1,5 +1,5 @@
 import React from 'react'
-import ProjectPreviewCard from '../../ProjectPreviewCard'
+import ProjectPreviewCard from '../../components/ProjectPreviewCard'
 import Checkbox from '../Home/CheckBox'
 function Contact() {
 

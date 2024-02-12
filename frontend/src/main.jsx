@@ -1,20 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from 'react-router-dom'
-import Login from './components/pages/Login/Login.jsx'
-import SignUp from './components/pages/SignUp/SignUp.jsx'
-import Landing from './components/pages/Landing/Landing.jsx'
 import Layout from './Layout.jsx'
-import Home from './components/pages/Home/Home.jsx'
-import Profile from './components/pages/Profile/Profile.jsx'
-import Contact from './components/pages/Contact/Contact.jsx'
-import AddProject from './components/pages/AddProject/AddProject.jsx'
+import {Landing, Login, SignUp, Home, AddProject, ProjectDetail, Profile, Contact, AboutUs} from "./pages/index.js"
+import store from './store/store.js'
+import { Provider } from 'react-redux'
 
-import ProjectDetail from './components/pages/ProjectDetail/ProjectDetail.jsx'
-import Comment from './components/pages/ProjectDetail/Comment/Comment.jsx'
-
-import About from './components/pages/ProjectDetail/About/About.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +19,7 @@ const router = createBrowserRouter(
       <Route path= 'contact' element={<Contact/>} />
       <Route path= 'add-project' element={<AddProject/>} />
       <Route path= 'project-detail' element={<ProjectDetail/>} />
+      <Route path= 'about-us' element={<AboutUs/>} />
       {/* <Route path= 'about' element={<About/>} />
       <Route path= 'comment' element={<Comment/>} /> */}
     
@@ -37,7 +30,11 @@ const router = createBrowserRouter(
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+
+    <Provider store={store}>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>,
+    </Provider>
+  
 )

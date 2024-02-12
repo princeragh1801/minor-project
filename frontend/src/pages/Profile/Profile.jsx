@@ -1,5 +1,6 @@
 import Projects from "./Project";
 import UserDetails from "./Userdetails";
+
 const Profile = () => {
     return (
       <div className="container mx-auto py-5">

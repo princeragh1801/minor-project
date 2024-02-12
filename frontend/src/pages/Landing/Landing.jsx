@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../../Button";
+import Button from "../../components/Button"
 import BoxWithHeadingAndCotainer from "./BoxWithHeadingAndCotainer";
-
+import { Link } from "react-router-dom";
 
 function Landing() {
   return (
@@ -25,8 +25,12 @@ function Landing() {
             recusandae officia quidem.
           </p>
           <div class="hidden lg:block m-5">
+            <Link to="/signup">
             <Button title="Join Us" className="bg-green-500 text-white" />
+            </Link>
+            <Link to="/login">
             <Button title="Sign In" className="text-black border-2" />
+            </Link>
           </div>
         </div>
 

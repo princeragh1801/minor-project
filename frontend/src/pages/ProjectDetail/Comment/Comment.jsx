@@ -1,4 +1,4 @@
-import ProjectDetail from "../ProjectDetail";
+
 import React from "react";
 
 function Comment() {

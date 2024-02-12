@@ -1,8 +1,8 @@
 import React from 'react'
 import RTE from './RTE'
-import Input from '../../Input'
+import Input from '../../components/Input'
 import ImageUpload from './ImageUpload'
-import Button from '../../Button'
+import Button from '../../components/Button'
 function AddProject() {
   return (
   <>

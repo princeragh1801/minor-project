@@ -1,13 +1,18 @@
 import React from 'react'
-import ProjectPreviewCard from '../../ProjectPreviewCard'
-import Input from '../../Input'
-import CheckBox from './CheckBox'
+import ProjectPreviewCard from '../../components/ProjectPreviewCard'
+import Input from '../../components/Input'
+import CheckBox from '../Home/CheckBox'
+import {useSelector} from "react-redux"
+import { selectUser } from '../../store/userSlice'
+
 function Home() {
+  const user = useSelector(selectUser)
+  console.log("User : ", user)
   return (
     <div className="my-4 flex flex-col justify-center items-center">
       <h1 className="text-3xl font-bold mb-4">Projects</h1>
       <div className="mb-4">
-        <Input placeholder = "Search..." />
+        <Input placeholder = {`Search.. `} />
       </div>
       
       {/* Horizontal row */}

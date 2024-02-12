@@ -6,8 +6,11 @@ import { RiProjectorLine } from "react-icons/ri";
 import { FaComments } from "react-icons/fa6";
 import { IoNotificationsSharp } from "react-icons/io5";
 import ListItem from "./ListItem";
+import {useSelector} from "react-redux"
+import { selectUser } from '../../store/userSlice'
 
 const UserDetails = () => {
+  const user = useSelector(selectUser)
   const items = [
     {
       title : "Dashboard",
@@ -45,8 +48,8 @@ const UserDetails = () => {
           <img src="https://th.bing.com/th/id/OIP.52T8HHBWh6b0dwrG6tSpVQHaFe?rs=1&pid=ImgDetMain" alt="" className="rounded-full  bg-black" height={100} width={100}/>
         
         <div className="details px-3 text-center mt-4">
-          <h1 className="font-bold">User-93</h1>
-          <p>093672882</p>
+          <h1 className="font-bold">{user['fullname']}</h1>
+          <p>{user['username']}</p>
         </div>
       </div>
       <h1 className="text-xl font-bold m-4">My account</h1>

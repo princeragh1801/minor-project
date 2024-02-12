@@ -1,6 +1,6 @@
 import React from 'react'
 import { IoCloudUploadOutline } from "react-icons/io5";
-import Button from '../../Button'
+import Button from '../../components/Button'
 function ImageUpload() {
   return (
     <div className='h-[40vh] w-[20vw] border-2 flex flex-col justify-center mb-4'>
