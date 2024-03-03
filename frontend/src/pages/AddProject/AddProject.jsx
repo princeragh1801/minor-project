@@ -1,29 +1,36 @@
 import React from "react";
 import RTE from "./RTE";
 import Input from "../../components/Input";
-import ImageUpload from "./ImageUpload";
+// import ImageUpload from "./ImageUpload";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import getCookie from "../../utils/getCookie";
 import { toast } from "react-toastify";
+import Select from "../../components/Select"
 
 function AddProject() {
   const token = getCookie("accessToken");
-  const {register, handleSubmit, watch, setValue, control, getValues} = useForm();
+  const {register, handleSubmit, watch, setValue, control, getValues} = useForm({
+    defaultValues : {
+      title : "",
+      description : "",
+      overview : "",
+      category : "",
+    }
+  });
 
   const uploadProject = async (data) => {
-    console.log("inside upload project");
-    console.log("GetValues : ", getValues)
-    const overview = getValues('overview');
+    // console.log("inside upload project");
+    // const overview = getValues('overview');
+    // console.log("overview from getVal : ", overview)
     try {
-      console.log("Overview : ", data.overview)
+      // console.log("Overview : ", data.overview)
 
-      console.log("Data : ", data)
+      // console.log("Data : ", data)
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
-      // formData.append("overview", data.overview);
-      formData.append("overview", overview);
+      formData.append("overview", data.overview);
       formData.append("category", data.category);
       formData.append("previewImage", data.previewImage[0]); // Append the file
       formData.append("file", data.file[0]); // Append the file
@@ -39,7 +46,6 @@ function AddProject() {
           body: formData,
         }
       );
-      // console.log("Response : ", response);
 
       if (!response.ok) {
         toast.error("Failed to upload project");
@@ -97,26 +103,18 @@ function AddProject() {
 
             {/* Right Container */}
             <div className="w-1/2 mx-4 px-4">
-            <Input
-                label="Category"
-                placeholder="Hardware or software"
-                {...register("category", {
-                  required: true,
-                })}
+            <Select
+                    options={["hardware", "software"]}
+                    label="Category"
+                    className="mb-4"
+                    {...register("category", { required: true })}
+                />
+              <RTE 
+              label="Overview " 
+              name="overview" 
+              control={control} 
+              defaultValue={getValues("content")} 
               />
-              <RTE
-                label="Overview :"
-                name="overview"
-                control={control}
-                setValue
-              />
-              {/* <Input
-                label="Overview"
-                placeholder="Enter overview"
-                {...register("overview", {
-                  required: true,
-                })}
-              /> */}
               
             </div>
           </div>
