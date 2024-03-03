@@ -21,8 +21,8 @@ function ProjectDetail() {
 <>
   <div className="pt-8 ">
     <div className="mx-10 flex items-center justify-around ">
-      <button onClick={()=> setPage(0)}>About</button>
-      <button onClick={() => setPage(1)}>Comment</button>
+      <button className={page == 0 ? "text-green-500 font-bold" : "font-bold"} onClick={()=> setPage(0)}>About</button>
+      <button className={page == 1 ? "text-green-500 font-bold" : "font-bold"} onClick={() => setPage(1)}>Comment</button>
  
     </div>
   </div>

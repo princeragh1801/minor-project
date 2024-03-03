@@ -1,54 +1,57 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import {Editor} from '@tinymce/tinymce-react'
-function RTE() {
-    const editorRef = useRef(null);
-    const log = () => {
-      if (editorRef.current) {
-        console.log(editorRef.current.getContent());
-      }
-    };
-    return (
-      <>
-      <div className='w-auto'>
-        
-        <Editor
-        apiKey="rg6sr11t19prcuqb20pduc10mzc3gc4a7wlg7szcxnbahp10"
-          onInit={(evt, editor) => editorRef.current = editor}
-          initialValue="<p>Add overview of your project.</p>"
-          init={{
-            height: 300,
-            menubar: true,
-            plugins: [
-              "image",
-              "advlist",
-              "autolink",
-              "lists",
-              "link",
-              "image",
-              "charmap",
-              "preview",
-              "anchor",
-              "searchreplace",
-              "visualblocks",
-              "code",
-              "fullscreen",
-              "insertdatetime",
-              "media",
-              "table",
-              "wordcount",
-              "anchor",
-          ],
-            toolbar: 'undo redo | formatselect | ' +
-            'bold italic backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-          }}
-        />
-        {/* <button onClick={log}>Log editor content</button> */}
-        
-      </div>
-      </>
-    );
-  }
+import { Controller } from "react-hook-form";
+function RTE({ name, control, label, setValue, defaultValue = "", ...props }) {
+  const handleEditorChange = (content) => {
+    setValue('overview', content);
+  };
+  return (
+    <div className="w-full">
+      {label && <label className="inline-block mb-1 pl-1">{label}</label>}
+      <Controller
+        name={name || "content"}
+        control={control}
+        render={({ field: { onChange } }) => (
+          <Editor
+          apiKey="rg6sr11t19prcuqb20pduc10mzc3gc4a7wlg7szcxnbahp10"
+            initialValue={defaultValue}
+            init={{
+              branding: false,
+              initialValue: defaultValue,
+              height: 500,
+              menubar: true,
+              plugins: [
+                "image",
+                "advlist",
+                "autolink",
+                "lists",
+                "link",
+                "image",
+                "charmap",
+                "preview",
+                "anchor",
+                "searchreplace",
+                "visualblocks",
+                "code",
+                "fullscreen",
+                "insertdatetime",
+                "media",
+                "table",
+                "code",
+                "help",
+                "wordcount",
+                "anchor",
+              ],
+              toolbar:
+                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+            }}
+            onEditorChange={handleEditorChange}
+          />
+        )}
+      />
+    </div>
+  );
+}
 export default RTE

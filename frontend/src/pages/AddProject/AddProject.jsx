@@ -1,37 +1,135 @@
-import React from 'react'
-import RTE from './RTE'
-import Input from '../../components/Input'
-import ImageUpload from './ImageUpload'
-import Button from '../../components/Button'
-function AddProject() {
-  return (
-  <>
-    <div className="flex flex-col justify-center items-center">
-    <div className=' my-10 '>
-        <h1 className='font-bold text-2xl text-center mb-10'>Add Project</h1>
-    </div>
+import React from "react";
+import RTE from "./RTE";
+import Input from "../../components/Input";
+import ImageUpload from "./ImageUpload";
+import Button from "../../components/Button";
+import { useForm } from "react-hook-form";
+import getCookie from "../../utils/getCookie";
+import { toast } from "react-toastify";
 
-      {/* Two containers */}
-      <div className="flex justify-center">
-        {/* Left Container */}
-        <div className="w-auto mx-20 p-4 ">
-          <Input label = "Title" placeholder = "Enter title"  />
-          <Input label = "Description " placeholder = "Enter description"  />
-          <ImageUpload/>
-          <Input type = "file" label = "Upload File" />
+function AddProject() {
+  const token = getCookie("accessToken");
+  const {register, handleSubmit, watch, setValue, control, getValues} = useForm();
+
+  const uploadProject = async (data) => {
+    console.log("inside upload project");
+    console.log("GetValues : ", getValues)
+    const overview = getValues('overview');
+    try {
+      console.log("Overview : ", data.overview)
+
+      console.log("Data : ", data)
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      // formData.append("overview", data.overview);
+      formData.append("overview", overview);
+      formData.append("category", data.category);
+      formData.append("previewImage", data.previewImage[0]); // Append the file
+      formData.append("file", data.file[0]); // Append the file
+
+      console.log("form Data : ", formData);
+      const response = await fetch(
+        "http://localhost:8000/api/v1/projects/upload-project",
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+          },
+          body: formData,
+        }
+      );
+      // console.log("Response : ", response);
+
+      if (!response.ok) {
+        toast.error("Failed to upload project");
+        return;
+      }
+      toast.success("Project uploaded successfully");
+    } catch (error) {
+      toast.error(error.message);
+      return;
+    }
+  };
+
+  return (
+    <>
+      <div className="flex flex-col justify-center items-center">
+        <div className=" my-10 ">
+          <h1 className="font-bold text-2xl text-center mb-10">Add Project</h1>
+        </div>
+
+        <form onSubmit={handleSubmit(uploadProject)}>
+          <div className="flex">
+            {/* Left Container */}
+            <div className="w-1/2 mx-4  px-4">
+              <Input
+                label="Title"
+                placeholder="Enter title"
+                {...register("title", {
+                  required: true,
+                })}
+              />
+              <Input
+                label="Description"
+                placeholder="Enter Description"
+                {...register("description", {
+                  required: true,
+                })}
+              />
+              <Input
+                label="Preview Image"
+                type="file"
+                accept="Image/*"
+                {...register("previewImage", {
+                  required: true,
+                })}
+              />
+              <Input
+                label="File"
+                type="file"
+                accept=".txt, .pdf"
+                {...register("file", {
+                  required: true,
+                })}
+              />
+            </div>
+
+            {/* Right Container */}
+            <div className="w-1/2 mx-4 px-4">
+            <Input
+                label="Category"
+                placeholder="Hardware or software"
+                {...register("category", {
+                  required: true,
+                })}
+              />
+              <RTE
+                label="Overview :"
+                name="overview"
+                control={control}
+                setValue
+              />
+              {/* <Input
+                label="Overview"
+                placeholder="Enter overview"
+                {...register("overview", {
+                  required: true,
+                })}
+              /> */}
+              
+            </div>
           </div>
 
-        {/* Right Container */}
-        <div className="w-1/2 p-4">
-          <h2 className="text-xl font-semibold mb-2">Add Project OverView</h2>
-          <RTE/>
-        </div>
+          <div className="w-full flex justify-center m-4">
+          <Button className=" text-center bg-green-500 text-white" type="submit" title={"Upload Project"} />
+          </div>
+        </form>
       </div>
-      <Button title={"Upload Project"} className='bg-green-500 text-white' />
-    </div>
-  </>
-    
-  )
+    </>
+  );
 }
 
-export default AddProject
+export default AddProject;
+
+// {/* Two containers */}

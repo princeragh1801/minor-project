@@ -4,7 +4,7 @@ import Input from '../../components/Input'
 import CheckBox from '../Home/CheckBox'
 import {useSelector} from "react-redux"
 import { selectUser } from '../../store/userSlice'
-
+import ViewProjects from '../../components/ViewProjects'
 function Home() {
   const user = useSelector(selectUser)
   console.log("User : ", user)
@@ -44,19 +44,8 @@ function Home() {
         </div>
 
         {/* Right Container */}
-        <div className='p-4 border-2 border-gray border-t-0 '>
-        <h2 className="text-xl font-bold ml-4 mb-2">Featured Projects</h2>
-        <div className="flex flex-wrap">
         
-          <ProjectPreviewCard/>
-          <ProjectPreviewCard/>
-          <ProjectPreviewCard/>
-          <ProjectPreviewCard/>
-          <ProjectPreviewCard/>
-          <ProjectPreviewCard/>
-        </div>
-        </div>
-        
+        <ViewProjects title={"Featured Projects"} />
       </div>
     </div>
   

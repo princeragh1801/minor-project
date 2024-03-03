@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import {setUser} from "../../store/userSlice"
+import setCookie from "../../utils/setCookie";
+import {toast} from "react-toastify"
 
 function Login() {
   const navigate = useNavigate()
-  const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch()
 
   const login = async (data) => {
-    setError("");
     try {
-      console.log("inside login method")
-      console.log("Email : ", data.email)
-      console.log("Password : ", data.password)
       const response = await fetch("http://localhost:8000/api/v1/users/login", {
         method: "POST",
         headers: {
@@ -25,25 +22,29 @@ function Login() {
         },
         body: JSON.stringify(data)
       });
-      console.log("Response : ", response)
-      console.log("got something !!")
+      
       if (!response.ok) {
-        console.log("failed to login");
-        throw new Error("Failed to login");
+        toast.error("Failed to login!")
+        return ;
       }
 
       const responseData = await response.json();
+      console.log("Response data : ", responseData)
+      setCookie("accessToken", responseData.data.accessToken, 1);
       const userData = responseData.data.user;
       console.log("User : ", userData)
       navigate("/home");
       dispatch(setUser(userData));
       // return data;
+      toast.success("Logged in successfully")
+
     } catch (error) {
-      setError(error.message);
+      toast.error(error.message)
     }
   };
 
   return (
+    <>
     <div className="flex mx-auto justify-center ml-24">
       {/* Left Container */}
       <div className="w-auto p-4 my-auto">
@@ -96,6 +97,7 @@ function Login() {
         />
       </div>
     </div>
+    </>
   );
 }
 

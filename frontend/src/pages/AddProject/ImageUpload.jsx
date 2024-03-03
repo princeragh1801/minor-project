@@ -1,6 +1,6 @@
 import React from 'react'
 import { IoCloudUploadOutline } from "react-icons/io5";
-import Button from '../../components/Button'
+
 function ImageUpload() {
   return (
     <div className='h-[40vh] w-[20vw] border-2 flex flex-col justify-center mb-4'>
@@ -10,8 +10,9 @@ function ImageUpload() {
       </div>
       <h1 className='text-xl font-medium text-center'>Select a project picture</h1>
       <div className='flex justify-center mt-4'>
-
-      <Button title="Select" className="border-2 w-20"/>
+      <input type="file" accept='image/*' className='ml-12' />
+      
+      {/* <Button title="Select" className="border-2 w-20"/> */}
       </div>
     </div>
   )

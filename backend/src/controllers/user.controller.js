@@ -110,7 +110,8 @@ const loginUser = asyncHandler(async (req, res) => {
     // password check
     // access and refresh token update
     // send cookie
-    console.log("request : ", req)
+
+    // console.log("request : ", req)
     const {email, username, password} = req.body;
     
     if((email === "" && username === "") || password === ""){
@@ -248,20 +249,20 @@ const changeCurrentPassword = asyncHandler(async(req, res)=>{
 
 const getCurrentUser = asyncHandler(async(req, res) =>{
     
-    // const user = await User.findById(
-    //     req.user?._id
-    //     ).select("-password -refreshToken")
-    // console.log("User : ", user)
-    console.log("User : ", req.user)
-    return res.send(req.user)
-    // .status(200)
-    // .json(
-    //     new ApiResponse(
-    //         200,
-    //         req.user,
-    //         "Current user fetched successfully"
-    //     )
-    // )
+    const user = await User.findById(
+        req.user?._id
+        ).select("-password -refreshToken")
+    console.log("User : ", user)
+   
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            {user},
+            "Current user fetched successfully"
+        )
+    )
 })
 
 const updateAccountDetails = asyncHandler(async(req, res) => {
@@ -328,6 +329,8 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
         )
     )
 })
+
+
 export {
     registerUser,
     loginUser, 
@@ -336,5 +339,5 @@ export {
     getCurrentUser,
     changeCurrentPassword,
     updateAccountDetails,
-    updateUserAvatar
+    updateUserAvatar,
 }

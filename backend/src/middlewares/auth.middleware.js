@@ -12,6 +12,8 @@ export const verifyJWT = asyncHandler(async(req, _, next) => {
         // const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM4NzhmM2EyZjA4NjcxNDE5Y2RmMzMiLCJlbWFpbCI6InByaW5jZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6InByaW5jZTE4MDEiLCJmdWxsbmFtZSI6IlByaW5jZSBSYWdodXdhbnNoaSIsImlhdCI6MTcwNzYzOTUwMywiZXhwIjoxNzA3NzI1OTAzfQ.sVDg5xcA4CKBu-ubA04UtkcKRSZ4a7cTmLYwH7Z0dPI";
 
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+        // const token = req.header("Authorization");
+
         if(!token){
             throw new ApiError(401, "Unauthorized request");
         }
