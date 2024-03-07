@@ -7,10 +7,13 @@ import { useForm } from "react-hook-form";
 import getCookie from "../../utils/getCookie";
 import { toast } from "react-toastify";
 import Select from "../../components/Select"
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/userSlice";
 function AddProject() {
   const token = getCookie("accessToken");
-  const {register, handleSubmit, watch, setValue, control, getValues} = useForm({
+  const dispatch = useDispatch();
+  const {register, handleSubmit, watch, setValue, control, 
+    getValues} = useForm({
     defaultValues : {
       title : "",
       description : "",
@@ -52,6 +55,16 @@ function AddProject() {
         return;
       }
       toast.success("Project uploaded successfully");
+      // const user = fetch(
+      //   "http://localhost:8000/api/v1/users/current-user",
+      //   {
+      //     method : 'GET',
+      //   }
+      // )
+      // if(!user){
+      //   toast.error("Error while fetching users details");
+      // }
+      // dispatch(setUser(user))
     } catch (error) {
       toast.error(error.message);
       return;

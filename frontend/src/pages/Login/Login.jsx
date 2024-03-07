@@ -4,43 +4,25 @@ import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import {setUser} from "../../store/userSlice"
+import {clearUser, setUser} from "../../store/userSlice"
 import setCookie from "../../utils/setCookie";
 import {toast} from "react-toastify"
+import authServices from "../../services/userServices";
 
 function Login() {
   const navigate = useNavigate()
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch()
 
-  const login = async (data) => {
-    try {
-      const response = await fetch("http://localhost:8000/api/v1/users/login", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      
-      if (!response.ok) {
-        toast.error("Failed to login!")
-        return ;
+  const login = (data) => {
+    authServices.loginUser(data)
+    .then((userData) => {
+      if(userData){
+        dispatch(setUser(userData));
+        navigate("/home");
+        console.log("User data : ", userData)
       }
-
-      const responseData = await response.json();
-      console.log("Response data : ", responseData)
-      setCookie("accessToken", responseData.data.accessToken, 1);
-      const userData = responseData.data.user;
-      console.log("User : ", userData)
-      navigate("/home");
-      dispatch(setUser(userData));
-      // return data;
-      toast.success("Logged in successfully")
-
-    } catch (error) {
-      toast.error(error.message)
-    }
+    })
   };
 
   return (

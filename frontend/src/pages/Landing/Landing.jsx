@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../../components/Button"
 import BoxWithHeadingAndCotainer from "./BoxWithHeadingAndCotainer";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux"
+import {selectUser} from "../../store/userSlice.js"
 
 function Landing() {
-  return (
+  const user = useSelector(selectUser);
+  // const navigate = useNavigate();
+  // useEffect(()=>{
+  //   if(user){
+  //     navigate("/home")
+  //   }
+  // }
+  // )
+  return !user ? (
     <> 
     <div className="w-full">
       <div className="flex h-2/3 mx-[5vw]">
@@ -80,7 +90,7 @@ function Landing() {
       </div>
 
     </>
-  );
+  ) : <Navigate to={"/home"}/>
 }
 
 export default Landing;

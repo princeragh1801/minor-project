@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Project } from "../models/project.model.js";
+import { User } from "../models/user.model.js";
 
 const uploadProject = asyncHandler(async(req, res) => {
     console.log("inside backend upload project")
@@ -53,11 +54,14 @@ const uploadProject = asyncHandler(async(req, res) => {
         demoVideoFile : demoVideoFilePath?.url,
         likes : 0,
     })
-    console.log("createdProject : ", createdProject)
+    
     if(!createdProject){
         throw new ApiError(500, "Something went wrong while creating a project")
     }
-
+    console.log("createdProject : ", createdProject)
+    user.projects.push(createdProject._id);
+    await user.save({validateBeforeSave:false});
+    
     return res
     .status(200)
     .json(
@@ -69,11 +73,51 @@ const uploadProject = asyncHandler(async(req, res) => {
     )
 })
 
-const getUserProjects = asyncHandler(async(req, res) =>{
-    const user = req.user;
-    
+const getAllProjects = asyncHandler(async (req, res) => {
+    const user = req?.user;
+    const userId = user?._id;
+
+    // i have to find all the projects which are not build by user
+    const projects = await Project.find({owner : {$ne : userId}});
+
+    if(!projects){
+        throw new ApiError(
+            500,
+            "Error while fetching the projects"
+        );
+    }
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            {projects},
+            "Project fetched successfully"
+        )
+    )
 })
 
+const getUserProjects = asyncHandler(async(req, res) => {
+    const userId = req.user._id;
+    const user = await User.findById(userId).populate("projects");
+    if(!user){
+        throw new ApiError(500, "Error while fetching users projects");
+    }
+    const userProjects = user.projects;
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            {userProjects},
+            "Projects fetched successfully"
+        )
+    )
+
+})
 export {
-    uploadProject
+    uploadProject,
+    getAllProjects,
+    getUserProjects
 }

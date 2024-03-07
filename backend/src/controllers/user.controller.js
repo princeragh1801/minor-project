@@ -48,10 +48,10 @@ const registerUser = asyncHandler( async (req, res) => {
         throw new ApiError(400, "All fields are required")
     }
 
-    console.log("Fullname : ", fullname)
-    console.log("Email : ", email)
-    console.log("Password : ", password)
-    console.log("Username : ", username)
+    // console.log("Fullname : ", fullname)
+    // console.log("Email : ", email)
+    // console.log("Password : ", password)
+    // console.log("Username : ", username)
 
     const existedUser = await User.findOne({
         $or : [{username}, {email}]
@@ -117,12 +117,12 @@ const loginUser = asyncHandler(async (req, res) => {
     if((email === "" && username === "") || password === ""){
        throw new ApiResponse(404, "All fields required")
     }
-    console.log("email : ", email)
-    console.log("password : ", password)
+    // console.log("email : ", email)
+    // console.log("password : ", password)
     const user = await User.findOne({
         $or : [{username}, {email}]
     })
-    console.log(user)
+    // console.log(user)
     if(!user){
         throw new ApiError(404, "User doesn't exist")
     }
@@ -135,7 +135,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id);
 
-    const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken").populate("projects");
 
     return res
     .status(200)
@@ -251,7 +251,7 @@ const getCurrentUser = asyncHandler(async(req, res) =>{
     
     const user = await User.findById(
         req.user?._id
-        ).select("-password -refreshToken")
+        ).select("-password -refreshToken").populate("projects")
     console.log("User : ", user)
    
     return res

@@ -1,13 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProjectPreviewCard from '../../components/ProjectPreviewCard'
 import Input from '../../components/Input'
 import CheckBox from '../Home/CheckBox'
 import {useSelector} from "react-redux"
 import { selectUser } from '../../store/userSlice'
 import ViewProjects from '../../components/ViewProjects'
+import { toast } from 'react-toastify'
+import getCookie from '../../utils/getCookie'
+
 function Home() {
   const user = useSelector(selectUser)
-  console.log("User : ", user)
+  const token = getCookie("accessToken");
+  const [projects, setProjects] = useState([]);
+  
+  useEffect(() => {
+    let fetchedProjects = [];
+    const fetchProject = (async()=>{
+      try {
+        const response = await fetch(
+          "http://localhost:8000/api/v1/projects/get-all-projects",
+          {
+            method: "GET",
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        if(!response.ok){
+          toast.error("Error while fetching the projects");
+          return;
+        }
+        const responseData = await response.json();
+        fetchedProjects = responseData.data.projects;
+        setProjects(fetchedProjects)
+      } catch (error) {
+        toast.error(error.message);
+      }
+    })
+    fetchProject();
+    setProjects(fetchedProjects)
+    console.log("Projects : ", projects)
+  }, [])
   return (
     <div className="my-4 flex flex-col justify-center items-center">
       <h1 className="text-3xl font-bold mb-4">Projects</h1>
@@ -45,7 +78,20 @@ function Home() {
 
         {/* Right Container */}
         
-        <ViewProjects title={"Featured Projects"} />
+        <ViewProjects title={"Featured Projects"} projects={projects} />
+
+        {/* <div className="p-4 border-2 border-gray border-t-0 ">
+          <h2 className="text-xl font-bold ml-4 mb-2">Featured Projects</h2>
+          <div className="flex flex-wrap">
+            {projects.map((project) => <ProjectPreviewCard 
+            title={project.title}
+            description={project.description}
+            previewImage={project.previewImage}
+
+            />)}
+          
+          </div>
+        </div> */}
       </div>
     </div>
   

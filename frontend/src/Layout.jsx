@@ -1,50 +1,38 @@
 import React, {useEffect, useState} from 'react'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-import { Outlet} from 'react-router-dom'
+import {Outlet, useNavigate} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setUser } from './store/userSlice'
-import getCookie from './utils/getCookie'
+import { clearUser,  setUser } from './store/userSlice.js'
+import authServices from "./services/userServices.js"
 
 function Layout() {
-  const url = "http://localhost:8000/api/v1/";
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch()
-  const token = getCookie("accessToken");
-
-  //  useEffect( async()=> {
-  //   try {
-  //     console.log("Token : ", token)
-  //     const response = await fetch(`${url}users/current-user`, {
-  //       method: "GET",
-  //       headers : {
-  //         "Authorization": token
-  //       }
-  //     })
-  //     console.log("Response : ", response)
+  const navigate = useNavigate();
+  useEffect(()=>{
+    setLoading(true);
+    authServices.getCurrentUser()
+    .then((userData) => {
+      if(userData){
+        dispatch(setUser(userData));
+        console.log("User data : ", userData);
+        navigate("/home")
+      }
       
-  //     if(response.ok){
-  //       const user = await response.json()
-  //       console.log("User : ", user)
-        
-  //       if(user){
-  //         dispatch(setUser(user))
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log("Error while fetching the current user : ", error)
-  //   }
-    
-  // },)
+    }).finally(setLoading(false))
+  }, [])
 
-
-
-  return (
+  return !loading ? (
     <>
       <Header/>  
+       <main>
         <Outlet/>
+       </main>
+       
       <Footer/>
     </>
-  )
+  ) : null
 }
 
 export default Layout

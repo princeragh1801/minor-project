@@ -1,5 +1,5 @@
 
-export default function setCookie(name, value, days) {
+export default function setCookie(name, value, days = 1) {
     var expires = "";
     if (days) {
         var date = new Date();

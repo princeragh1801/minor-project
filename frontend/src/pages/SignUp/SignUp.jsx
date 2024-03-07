@@ -4,48 +4,23 @@ import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import {setUser} from "../../store/userSlice"
-
+import {clearUser, setUser} from "../../store/userSlice"
+import authServices from "../../services/userServices";
 function SignUp() {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
-  const create = async (data) => {
-    setError("");
-    try {
-      console.log("inside register method");
-      // console.log("Full name : ", data.name);
-      console.log("Email : ", data.email);
-      console.log("Password : ", data.password);
-      const response = await fetch(
-        "http://localhost:8000/api/v1/users/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      console.log("Response : ", response);
-      console.log("got something !!");
-      if (!response.ok) {
-        console.log("failed to register");
-        throw new Error("Failed to register");
+  const create = (data) => {
+    authServices.registerUser(data)
+    .then((userData)=>{
+      if(userData){
+        dispatch(setUser(userData));
+        navigate("/home");
+      }else{
+        dispatch(clearUser());
       }
-
-      const responseData = await response.json();
-      console.log(responseData)
-      const userData = responseData.data.user;
-      console.log("User : ", userData);
-      navigate("/home");
-      dispatch(setUser(userData));
-
-    } catch (error) {
-      setError(error.message);
-    }
+    })
   };
   return (
     <div className="flex mx-auto justify-center ml-24">

@@ -1,13 +1,15 @@
 import React from "react";
 import Button from '../Button'
-import {Link, NavLink} from 'react-router-dom'
+import {Link, NavLink, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from "react-redux"
 import { selectUser, clearUser } from '../../store/userSlice'
+import authServices from "../../services/userServices";
 
 function Header() {
   const user = useSelector(selectUser)
   const authStatus = user != null;
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const navItems = [
     {
       name: 'Home',
@@ -41,15 +43,10 @@ function Header() {
     },
   ]
 
-  const logoutHandler = async() =>{
-    try {
-      await fetch("http://localhost:8000/api/v1/users/logout", {
-        method: "POST"
-      });
-      dispatch(clearUser())
-    } catch (error) {
-      throw new Error("Failed to logout");
-    }
+  const logoutHandler =() =>{
+    authServices.logoutUser();
+    dispatch(clearUser());
+    navigate("/login");
   }
   return (
     <div className="relative w-full bg-white shadow-md py-2">
@@ -62,7 +59,7 @@ function Header() {
             {navItems.map((item) => 
             item.active ? 
               (
-                <li>
+                <li key={item.name}>
               <NavLink
                 to={item.toPage}
                 className="text-lg font-semibold text-gray-800 hover:text-gray-900 hover:border-b-2 border-green-600"
@@ -72,38 +69,7 @@ function Header() {
             </li>
               ) : null
             )}
-            {/* <li>
-              <NavLink
-                to="/home"
-                className="text-lg font-semibold text-gray-800 hover:text-gray-900 hover:border-b-2 border-green-600"
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/profile"
-                className="text-lg font-semibold text-gray-800 hover:text-gray-900 hover:border-b-2 border-green-600"
-              >
-                Profile
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className="font-semibold text-gray-800 hover:text-gray-900 text-lg hover:border-b-2 border-green-600"
-              >
-                Contact
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/add-project"
-                className="font-semibold text-gray-800 hover:text-gray-900 text-lg hover:border-b-2 border-green-600"
-              >
-                Add a Project
-              </NavLink>
-            </li> */}
+
           </ul>
         </div>
         <div className="hidden lg:block mx-4">
@@ -120,8 +86,7 @@ function Header() {
         <Button title="Sign In" className="text-black border-2" />
         </Link></>)
       }
-        
-        
+         
         </div>
         
       </div>
