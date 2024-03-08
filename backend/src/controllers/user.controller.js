@@ -39,7 +39,7 @@ const registerUser = asyncHandler( async (req, res) => {
     // return response
 
     const {fullname, email, username, password} = req.body;
-    console.log("email : ", email);
+    // console.log("email : ", email);
 
     // we can handle it separately also
     if(
@@ -89,7 +89,7 @@ const registerUser = asyncHandler( async (req, res) => {
     if(!createdUser){
         throw new ApiError(500, "Something went wrong while registering the user")
     }
-    console.log("Created User : ", createdUser)
+    // console.log("Created User : ", createdUser)
     return res.status(200).json(
         new ApiResponse(
             200, // status code

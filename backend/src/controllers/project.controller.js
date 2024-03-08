@@ -6,17 +6,17 @@ import { Project } from "../models/project.model.js";
 import { User } from "../models/user.model.js";
 
 const uploadProject = asyncHandler(async(req, res) => {
-    console.log("inside backend upload project")
+    // console.log("inside backend upload project")
 
     const {title, description, overview, category} = req.body;
     console.log("Req body : ", req.body)
     if( !title || !description || !overview || !category){
         throw new ApiError(404, "All the fields are required")
     }
-    console.log("Checked all the requrired details")
+    // console.log("Checked all the requrired details")
     const user = req.user;
-    console.log("User : ", user);
-    console.log("Req files : ", req.files)
+    // console.log("User : ", user);
+    // console.log("Req files : ", req.files)
     const previewImageLocalPath = req.files.previewImage[0]?.path;
     const fileLoacalPath = req.files.file[0]?.path;
     
@@ -27,7 +27,7 @@ const uploadProject = asyncHandler(async(req, res) => {
         throw new ApiError(404, "File is required");
     }
 
-    console.log("Files extracted successfully");
+    // console.log("Files extracted successfully");
     let demoVideoFileLoacalPath;
 
     if(req.files && (Array.isArray(req.files.demoVideoFile)) && req.files.demoVideoFile.length > 0){
@@ -41,8 +41,8 @@ const uploadProject = asyncHandler(async(req, res) => {
     if(!previewImagePath || !filePath){
         throw new ApiError(500, "Something went wrong while uploading the files on cloudinary")
     }
-    console.log("Files uploaded successfully");
-    console.log("Preview Image path : ", previewImagePath)
+    // console.log("Files uploaded successfully");
+    // console.log("Preview Image path : ", previewImagePath)
     const createdProject = await Project.create({
         owner : user,
         title : title,
@@ -58,16 +58,17 @@ const uploadProject = asyncHandler(async(req, res) => {
     if(!createdProject){
         throw new ApiError(500, "Something went wrong while creating a project")
     }
-    console.log("createdProject : ", createdProject)
+    // console.log("createdProject : ", createdProject)
     user.projects.push(createdProject._id);
     await user.save({validateBeforeSave:false});
-    
+    const updatedUser = await User.findById(user._id).populate("projects");
+    const projects = updatedUser.projects;
     return res
     .status(200)
     .json(
         new ApiResponse(
             200,
-            {},
+            {projects},
             "Project uploaded successfully"
         )
     )

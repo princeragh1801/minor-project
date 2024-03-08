@@ -4,50 +4,28 @@ import { IoSettings } from "react-icons/io5";
 import { RiProjectorLine } from "react-icons/ri";
 
 import Dashboard from "./Dashboard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../store/userSlice";
 import { useEffect, useState } from "react";
 import ViewProjects from "../../components/ViewProjects";
 import EditProfile from "./EditProfile";
 import Settings from "./Settings";
-import {getUserProjectsAPI} from "../../services/apis.js"
-import getCookie from "../../utils/getCookie.js"
-import {successMsg, errorMsg} from "../../utils/toastMessage.js"
+import { selectUserProjects, setUserProjects } from "../../store/projectSlice.js";
+import projectServices from "../../services/projectServices.js";
 const Profile = () => {
-  const token = getCookie("accessToken");
   const user = useSelector(selectUser)
   const [component, setComponent] = useState(0)
-  
-  const [projects, setProjects] = useState([]);
+  const userProjects = useSelector(selectUserProjects);
+  const dispatch = useDispatch()
   useEffect(() => {
-    let userProjects;
-    const fetchUserProject = (async()=> {
-      try {
-        const response = await fetch(
-          getUserProjectsAPI,
-          {
-            method : 'GET',
-            headers : {
-              'Authorization' : token
-            }
-          }
-        )
-        if(!response.ok){
-          errorMsg("Failed to fetch the users projects");
+    if(!userProjects){
+      projectServices.getUserProjects()
+      .then((projects)=>{
+        if(projects){
+          dispatch(setUserProjects(projects));
         }
-        const responseData = await response.json();
-        console.log("response data : ", responseData)
-        userProjects = responseData.data.userProjects;
-        setProjects(userProjects)
-        successMsg("Projects fetched")
-    
-      } catch (error) {
-        errorMsg(error.message);
-      }
-    })
-    fetchUserProject();
-    setProjects(userProjects)
-    console.log("User Projects : ", projects)
+      })
+    }
   }, [])
   const items = [
     {
@@ -63,7 +41,7 @@ const Profile = () => {
     {
       title : "Your Projects",
       icon : <RiProjectorLine/>,
-      page : <ViewProjects title={"Your Projects"} projects={projects}/>
+      page : <ViewProjects title={"Your Projects"}/>
     },
     {
       title : "Settings",

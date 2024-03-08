@@ -1,6 +1,6 @@
 
 import {successMsg, errorMsg} from "../utils/toastMessage"
-import {getAllProjectsAPI, getUserProjectsAPI, uploadProjectAPI} from "./apis"
+
 import getCookie from "../utils/getCookie";
 
 const token = getCookie("accessToken");
@@ -18,7 +18,7 @@ export class ProjectServices{
         formData.append("file", data.file[0]); // Append the file
   
         const response = await fetch(
-          uploadProjectAPI,
+          "http://localhost:8000/api/v1/projects/upload-project",
           { 
             method: "POST",
             headers: {
@@ -32,21 +32,23 @@ export class ProjectServices{
           errorMsg("Failed to upload project");
           return null;
         }
+        const responseData = await response.json();
+        const projects = responseData.data.projects;
         successMsg("Project uploaded successfully");
-        return "ok";
+        return projects;
         
       } catch (error) {
         errorMsg(error.message);
         return null;
       }
-      return "ok";
+      
   }
 
   async getAllProjects(){
       let projects;
       try {
           const response = await fetch(
-            getAllProjectsAPI,
+            "http://localhost:8000/api/v1/projects/get-all-projects",
             {
               method: "GET",
               headers: {
@@ -58,8 +60,11 @@ export class ProjectServices{
             errorMsg("Error while fetching the projects");
             return;
           }
+          console.log("Response : ", response)
           const responseData = await response.json();
+          console.log("Responsedata : ", responseData)
           projects = responseData.data.projects;
+          console.log("Projects : ", projects)
         } catch (error) {
           errorMsg(error.message);
         }
@@ -70,7 +75,7 @@ export class ProjectServices{
       let projects;
       try {
           const response = await fetch(
-            getUserProjectsAPI,
+            "http://localhost:8000/api/v1/projects/get-user-projects",
             {
               method: "GET",
               headers: {
@@ -83,7 +88,8 @@ export class ProjectServices{
             return;
           }
           const responseData = await response.json();
-          projects = responseData.data.projects;
+          console.log("response data inside user projects : ", responseData)
+          projects = responseData.data.userProjects;
         } catch (error) {
           errorMsg(error.message);
         }

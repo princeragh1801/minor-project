@@ -5,10 +5,10 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import getCookie from "../../utils/getCookie";
-import { toast } from "react-toastify";
 import Select from "../../components/Select"
 import { useDispatch } from "react-redux";
-import { setUser } from "../../store/userSlice";
+import {setUserProjects} from "../../store/projectSlice.js"
+import projectServices from "../../services/projectServices";
 function AddProject() {
   const token = getCookie("accessToken");
   const dispatch = useDispatch();
@@ -22,53 +22,11 @@ function AddProject() {
     }
   });
 
-  const uploadProject = async (data) => {
-    // console.log("inside upload project");
-    // const overview = getValues('overview');
-    // console.log("overview from getVal : ", overview)
-    try {
-      // console.log("Overview : ", data.overview)
-
-      // console.log("Data : ", data)
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("overview", data.overview);
-      formData.append("category", data.category);
-      formData.append("previewImage", data.previewImage[0]); // Append the file
-      formData.append("file", data.file[0]); // Append the file
-
-      console.log("form Data : ", formData);
-      const response = await fetch(
-        "http://localhost:8000/api/v1/projects/upload-project",
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        toast.error("Failed to upload project");
-        return;
-      }
-      toast.success("Project uploaded successfully");
-      // const user = fetch(
-      //   "http://localhost:8000/api/v1/users/current-user",
-      //   {
-      //     method : 'GET',
-      //   }
-      // )
-      // if(!user){
-      //   toast.error("Error while fetching users details");
-      // }
-      // dispatch(setUser(user))
-    } catch (error) {
-      toast.error(error.message);
-      return;
-    }
+  const uploadProject = (data) => {
+    projectServices.uploadProject(data)
+    .then((projects)=>{
+      dispatch(setUserProjects(projects));
+    })
   };
 
   return (
