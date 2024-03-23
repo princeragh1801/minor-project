@@ -2,144 +2,76 @@ import React from 'react'
 
 function Footer() {
   return (
-    <section className="relative overflow-hidden py-10 ">
-  <div className="relative z-10 mx-auto max-w-7xl px-4">
-    <div className="-m-6 flex flex-wrap">
-      <div className="w-full p-6 md:w-1/2 lg:w-5/12">
-        <div className="flex h-full flex-col justify-center">
-          <div className="mb-4 inline-flex items-center">
-            
-            <span className="ml-4 text-3xl font-bold">.DOT</span>
+    <footer className=" px-[5vw] text-gray-400 py-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4 sm:px-6 lg:px-8">
+        <div>
+          <h2 className="text-black text-4xl font-bold mb-4">.DOT</h2>
+          <p className="mb-4 text-gray-500 text-lg font-semibold">
+            Project Collaboration Platform is all about making education more exciting and better for students in Indian colleges and universities.
+          </p>
+        </div>
+        <div>
+          <h2 className="text-black text-2xl font-bold mb-4 uppercase">Quick Links</h2>
+          <ul>
+            <li>
+              <a
+                href="#"
+                className="hover:text-green-500 transition-colors duration-300 text-gray-500 text-lg font-semibold"
+              >
+                Learn
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="hover:text-green-500 transition-colors duration-300 text-gray-500 text-lg font-semibold"
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="hover:text-green-500 transition-colors duration-300 text-gray-500 text-lg font-semibold"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-black text-2xl font-bold mb-4 uppercase">Follow Us</h2>
+          <div className="flex flex-col space-y-4">
+            <a
+              href="#"
+              className="hover:text-green-500 transition-colors duration-300 text-gray-500 text-lg font-semibold"
+            >
+              Facebook
+            </a>
+            <a
+              href="#"
+              className="hover:text-green-500 transition-colors duration-300 text-gray-500 text-lg font-semibold"
+            >
+              Twitter
+            </a>
+            <a
+              href="#"
+              className="hover:text-green-500 transition-colors duration-300 text-gray-500 text-lg font-semibold"
+            >
+              Instagram
+            </a>
           </div>
-          <div>
-            <p className="mb-4  text-base font-medium">
-              The Project Collaboration Platform
-            </p>
-            <p className="text-sm text-gray-600">
-              © Copyright 2024. All Rights Reserved by .DOT
-            </p>
-          </div>
         </div>
-      </div>
-      <div className="w-full p-6 md:w-1/2 lg:w-2/12">
-        <div className="h-full">
-          <h3 className="tracking-px mb-9  text-lg font-semibold uppercase text-gray-500">
-            Company
-          </h3>
-          <ul>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Features
-              </a>
-            </li>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Pricing
-              </a>
-            </li>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Affiliate Program
-              </a>
-            </li>
-            <li>
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Press Kit
-              </a>
-            </li>
-          </ul>
+        <div>
+          <h2 className="text-black text-2xl font-bold mb-4 uppercase ">Contact Us</h2>
+          <p className='mb-2 text-gray-500 text-lg font-semibold'>New Delhi, India</p>
+          <p className='mb-2 text-gray-500 text-lg font-semibold'>Delhi 10001</p>
+          <p className='mb-2 text-gray-500 text-lg font-semibold'>Email: info@dot.com</p>
+          <p className='mb-2 text-gray-500 text-lg font-semibold'>Phone: (123) 456-7890</p>
         </div>
-      </div>
-      <div className="w-full p-6 md:w-1/2 lg:w-2/12">
-        <div className="h-full">
-          <h3 className="tracking-px mb-9  text-lg font-semibold uppercase text-gray-500">
-            Support
-          </h3>
-          <ul>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Account
-              </a>
-            </li>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Help
-              </a>
-            </li>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Contact Us
-              </a>
-            </li>
-            <li>
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Customer Support
-              </a>
-            </li>
-          </ul>
         </div>
-      </div>
-      <div className="w-full p-6 md:w-1/2 lg:w-3/12">
-        <div className="h-full">
-          <h3 className="tracking-px mb-9  text-lg font-semibold uppercase text-gray-500">
-            Legals
-          </h3>
-          <ul>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Terms &amp; Conditions
-              </a>
-            </li>
-            <li className="mb-4">
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a
-                className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                href="#"
-              >
-                Licensing
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+        <p className="text-center text-sm pt-8">© 2024 Project Collaboration Platform. All rights reserved.</p>
+    </footer>
   )
 }
 

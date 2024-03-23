@@ -4,12 +4,13 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Project } from "../models/project.model.js";
 import { User } from "../models/user.model.js";
+import { checkPlagiarismForProject } from "../utils/plagarismChecker/checkPlagarismForProject.js";
 
 const uploadProject = asyncHandler(async(req, res) => {
     // console.log("inside backend upload project")
 
     const {title, description, overview, category} = req.body;
-    console.log("Req body : ", req.body)
+    // console.log("Req body : ", req.body)
     if( !title || !description || !overview || !category){
         throw new ApiError(404, "All the fields are required")
     }
@@ -33,7 +34,7 @@ const uploadProject = asyncHandler(async(req, res) => {
     if(req.files && (Array.isArray(req.files.demoVideoFile)) && req.files.demoVideoFile.length > 0){
         demoVideoFileLoacalPath = req.files.demoVideoFile[0].path;
     }
-
+    
     const previewImagePath = await uploadOnCloudinary(previewImageLocalPath);
     const filePath = await uploadOnCloudinary(fileLoacalPath)
     const demoVideoFilePath = await uploadOnCloudinary(demoVideoFileLoacalPath)
@@ -54,7 +55,19 @@ const uploadProject = asyncHandler(async(req, res) => {
         demoVideoFile : demoVideoFilePath?.url,
         likes : 0,
     })
+    // const checkPlagiarism = await checkPlagiarismForProject(createdProject);
     
+    // if(checkPlagiarism == 1){
+    //     console.log("You got plagarised");
+    //     const response = await Project.findByIdAndDelete(createdProject._id);
+    //     if(response){
+    //         console.log("We have deleted your project");
+    //     }
+    //     throw new ApiError(
+    //         400,
+    //         "Your Project got plagarised"
+    //     )
+    // }
     if(!createdProject){
         throw new ApiError(500, "Something went wrong while creating a project")
     }

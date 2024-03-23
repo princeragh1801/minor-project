@@ -1,15 +1,22 @@
-import React, { useId } from 'react'
+import React from 'react'
 import IconWithName from './IconWithName'
 import { BiLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import {useDispatch} from "react-redux"
+import { setCurrProject } from '../store/projectSlice';
+
 function ProjectPreviewCard({ project }) {
   const title = project.title;
   const description = project.description;
   const previewImage = project.previewImage;
   const id = project._id;
   // const likes = project.likes;
+  const dispatch = useDispatch()
   
+  const onClickHandler = () => {
+    dispatch(setCurrProject(project));
+  }
   return (
     
     <div key={id} className="w-[350px] rounded-md border m-4">
@@ -32,12 +39,13 @@ function ProjectPreviewCard({ project }) {
     <p className='text-sm text-gray-500 font-semibold'>20.03.2024</p>
     <hr />
     <Link to="/project-detail">
-    <button
-      type="button"
-      className="w-full mt-4 bg-black px-2.5 py-1 text-lg font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black rounded-md"
-    >
-      Read More
-    </button>
+      <button 
+        type="button"
+        className="w-full mt-4 bg-black px-2.5 py-1 text-lg font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black rounded-md"
+        onClick={onClickHandler}
+      >
+        Read More
+      </button>
     </Link>
   </div>
 </div>

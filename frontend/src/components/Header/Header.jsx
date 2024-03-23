@@ -54,7 +54,7 @@ function Header() {
         <div className="inline-flex items-center space-x-2">
           <span className="font-bold text-2xl">.DOT</span>
         </div>
-        <div className="hidden grow items-start lg:flex">
+        <div className=" grow items-start lg:flex">
           <ul className="ml-12 inline-flex space-x-8">
             {navItems.map((item) => 
             item.active ? 
@@ -72,7 +72,7 @@ function Header() {
 
           </ul>
         </div>
-        <div className="hidden lg:block mx-4">
+        <div className="hidden sm:block mx-4">
         
         {authStatus ? (
           <Link to='/login' >

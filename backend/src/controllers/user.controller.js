@@ -60,7 +60,11 @@ const registerUser = asyncHandler( async (req, res) => {
     if(existedUser){
         throw new ApiError(409, "User with email or username already exist")
     }
+    const nameParts = fullname.trim().split(/\s+/);
 
+    // Extract the first and last elements
+    const firstName = nameParts[0];
+    const lastName = nameParts[nameParts.length - 1];
     // here we doesn't required avatar as required field
 
     // const avatarLocalPath = req.files?.avatar[0]?.path;
@@ -75,11 +79,15 @@ const registerUser = asyncHandler( async (req, res) => {
     //     throw new ApiError(400, "Avatar is required")
     // }
 
+    // we use api to generate avatar
+    const avatar = `https://ui-avatars.com/api/?name=${firstName}+${lastName}`;
+    
     const user = await User.create({
         fullname : fullname,
         email : email,
         username : username.toLowerCase(),
         password : password,
+        avatar : avatar
     })
 
     const createdUser = await User.findById(user._id).select(

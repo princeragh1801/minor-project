@@ -2,13 +2,14 @@
 import getCookie from '../utils/getCookie'
 import setCookie from '../utils/setCookie';
 import { successMsg, errorMsg } from '../utils/toastMessage';
-import { getCurrentUserAPI, loginUserAPI, registerUserAPI } from './apis';
+
 
 export class AuthServices{
   async getCurrentUser(){
     try {
         const token = getCookie("accessToken");
         // console.log("Token : ", token)
+        
         const response = await fetch("http://localhost:8000/api/v1/users/current-user", {
           method: "GET",
           headers : {

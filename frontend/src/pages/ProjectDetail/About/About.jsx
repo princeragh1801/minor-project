@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrProject } from "../../../store/projectSlice";
 
 function About() {
+  const project = useSelector(selectCurrProject);
+  const title = project.title;
+  const description = project.description;
+  
   return (
     <div className="container ">
       {/* <ProjectDetail></ProjectDetail> */}
@@ -33,7 +39,8 @@ function About() {
               <div className="col-span-1">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">Title</h3>
                 <h3 className="font-medium text-gray-700">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. */}
+                  {title}
                 </h3>
               </div>
               <div className="col-span-1">
@@ -61,10 +68,11 @@ function About() {
                   Benifit
                 </h3>
                 <p className="text-gray-700">
-                  Sed sodales odio a sem eleifend, et ultrices lorem molestie.
+                  {/* Sed sodales odio a sem eleifend, et ultrices lorem molestie.
                   Nam condimentum erat eu libero bibendum, eget aliquet ante
                   laoreet. Vivamus ut bibendum leo. Mauris scelerisque leo sit
-                  amet turpis feugiat, id molestie purus fermentum.
+                  amet turpis feugiat, id molestie purus fermentum. */}
+                  {description}
                 </p>
               </div>
               <div className="col-span-1">

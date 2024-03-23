@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import About from "./About/About";
 import Comment from './Comment/Comment'
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrProject } from "../../store/projectSlice";
 
 function ProjectDetail() {
   const [page, setPage] = useState(0)
-
+  
   const renderPage = [
     {
       loadPage : <About/>,
