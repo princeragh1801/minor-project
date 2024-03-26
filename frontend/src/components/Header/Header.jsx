@@ -52,7 +52,7 @@ function Header() {
     <div className="relative w-full bg-white shadow-md py-2">
       <div className="mx-10 flex  items-center justify-between px-2 py-2 ">
         <div className="inline-flex items-center space-x-2">
-          <span className="font-bold text-2xl">.DOT</span>
+          <span className=" font-bold text-2xl">.DOT</span>
         </div>
         <div className=" grow items-start lg:flex">
           <ul className="ml-12 inline-flex space-x-8">
@@ -72,7 +72,7 @@ function Header() {
 
           </ul>
         </div>
-        <div className="hidden sm:block mx-4">
+        <div className="hidden md:block mx-4">
         
         {authStatus ? (
           <Link to='/login' >

@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import {clearUser, setUser} from "../../store/userSlice"
 import authServices from "../../services/userServices";
+import projectServices from "../../services/projectServices";
+import setAllProjects from '../../store/projectSlice'
+import { errorMsg } from "../../utils/toastMessage";
+
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,6 +20,11 @@ function SignUp() {
     .then((userData)=>{
       if(userData){
         dispatch(setUser(userData));
+        projectServices.getAllProjects().then((projects)=>{
+          if(projects){
+            dispatch(setAllProjects(projects));
+          }
+        }).catch(error => errorMsg(error));
         navigate("/home");
       }else{
         dispatch(clearUser());
@@ -23,9 +32,9 @@ function SignUp() {
     })
   };
   return (
-    <div className="flex mx-auto justify-center ml-24">
+    <div className="grid grid-cols-1 md:grid-cols-2 ">
       {/* Left Container */}
-      <div className="w-auto p-4 my-auto">
+      <div className=" mr-auto ml-[6vw] md:mx-auto md:w-auto p-4 my-auto">
         <h2 className="text-[40px] font-bold mb-2">Welcome to .Dot</h2>
         <h2 className="text-3xl font-bold mb-10">Join us to connect</h2>
         <form onSubmit={handleSubmit(create)}>
@@ -82,11 +91,11 @@ function SignUp() {
       </div>
 
       {/* Right Container */}
-      <div className="w-1/2 p-4">
+      <div className="hidden md:block w-full p-4">
         <img
           src="src/assets/Images/team-work.jpg"
           alt="Placeholder Image"
-          className="w-[40vw] h-auto"
+          className="my-[5vh] lg:my-[2vh] h-auto"
         />
       </div>
     </div>

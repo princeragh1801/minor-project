@@ -31,15 +31,15 @@ function AddProject() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col flex-wrap justify-center items-center">
         <div className=" my-10 ">
           <h1 className="font-bold text-2xl text-center mb-10">Add Project</h1>
         </div>
 
         <form onSubmit={handleSubmit(uploadProject)}>
-          <div className="flex">
+          <div className="block sm:flex">
             {/* Left Container */}
-            <div className="w-1/2 mx-4  px-4">
+            <div className="w-full sm:w-1/2 mx-4  px-4">
               <Input
                 label="Title"
                 placeholder="Enter title"
@@ -73,7 +73,7 @@ function AddProject() {
             </div>
 
             {/* Right Container */}
-            <div className="w-1/2 mx-4 px-4">
+            <div className="w-full sm:w-1/2 mx-4 px-4">
             <Select
                     options={["hardware", "software"]}
                     label="Category"
